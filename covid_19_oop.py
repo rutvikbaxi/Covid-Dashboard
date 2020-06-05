@@ -174,7 +174,7 @@ class covid_plotter:
         tracea=go.Scatter(x=df2.lockdown, y=df2.active, mode='lines+markers',name='active', marker_symbol=2,
                            marker = dict(color = '#fa574b'),text=(df2.peractive.apply(lambda x:str(x)) + '%'))
         data = [tracet, tracede,tracedi,tracea]
-        layout = dict(title = 'Lockdown-wise changes in cases',xaxis= dict(title= 'Date',zeroline= True),height=400)
+        layout = dict(title = 'Lockdown-wise changes in cases',xaxis= dict(title= 'Lockdown',zeroline= True),height=400)
         fig2 = dict(data = data, layout = layout)
         return fig2
 
