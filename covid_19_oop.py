@@ -4,6 +4,9 @@ import requests
 import numpy as np
 import pandas as pd
 import streamlit as st
+import plotly.graph_objs as go
+from plotly.offline import init_notebook_mode,iplot,plot,download_plotlyjs
+        
 #from map_plotter_india import *
 
 #df_timestamp=pd.read_pickle('df_timestamp.pkl')
@@ -108,9 +111,6 @@ class covid_india:
 
 class covid_plotter:
     def lineplot(self,df,title_graph):
-        import plotly.graph_objs as go
-        from plotly.offline import init_notebook_mode,iplot,plot,download_plotlyjs
-        import pandas as pd
         roll=df['active'].rolling(7).mean()
         roll=roll.fillna(0) 
         df['rollingactive']=pd.DataFrame(roll)
@@ -132,20 +132,18 @@ class covid_plotter:
         return fig
     
     def stack_bar(self,df,title_graph):
-        import plotly.graph_objs as go
-        from plotly.offline import init_notebook_mode,iplot,plot,download_plotlyjs
         roll=df['active'].rolling(7).mean()
         roll=roll.fillna(0) 
         df['rollingactive']=pd.DataFrame(roll)
-        fig = go.Figure(data=[
+        fig1 = go.Figure(data=[
         go.Bar(name='Active',    x=df.date, y=df.active,marker=dict(color='#fa574b'),hovertext=(df.peractive.apply(lambda x:str(x)) + '%')),
         go.Bar(name='Discharged',x=df.date, y=df.discharged,marker=dict(color='#4dfa90'),hovertext=(df.perdis.apply(lambda x:str(x)) + '%')),
         go.Bar(name='Deaths',    x=df.date, y=df.deaths,marker=dict(color='#4cd0f5'),hovertext=(df.perdeath.apply(lambda x:str(x)) + '%')),
         go.Scatter(name='Last 7 days average', x=df.date, y=df.rollingactive ,marker=dict(color='#000000'),hovertext=(df.rollingactive.apply(lambda x:str(x)) + '%')),
-        #go.Bar(name='Active',    x=df.date, y=df.active,marker=dict(color='#c72014')),
         ])
-        fig.update_layout(barmode='stack',title=title_graph,height=400)
-        return fig
+        fig1.update_layout(barmode='stack',title=title_graph,height=400)
+
+        return fig1
     
         min_4=df_statewise[-35:].sort_values('active',ascending=False)[:4]['loc'].values
         fig = make_subplots(rows=2, cols=2,
@@ -159,6 +157,26 @@ class covid_plotter:
                         title_text="States with highest active cases")
         return fig
 
+    def lockdown(self,df):
+        date_list=['2020-03-24', '2020-04-14', '2020-05-01', '2020-05-17','2020-05-30',df[-1:].date.values[0]]
+        df2=df[df['date'].isin(date_list)]
+        for i in range(0,4):
+            x=date_list[i]
+            df2.loc[df2['date']==x,'lockdown']='Lockdown {}'.format(i)
+        df2.loc[df2['date']=='2020-05-30','lockdown']='Unlock {}'.format(1)
+        df2.loc[df2['date']==df[-1:].date.values[0],'lockdown']='Present'
+        tracet=go.Scatter(x=df2.lockdown, y=df2.total, mode='lines+markers',name='total cases',marker_symbol=0,
+                   marker = dict(color = '#4cd0f5'),)
+        tracede=go.Scatter(x=df2.lockdown, y=df2.deaths, mode='lines+markers',name='deaths',marker_symbol=4,
+                           marker = dict(color = '#6e6b63'),text=(df2.perdeath.apply(lambda x:str(x)) + '%'))
+        tracedi=go.Scatter(x=df2.lockdown, y=df2.discharged, mode='lines+markers',name='discharged', marker_symbol=6,
+                           marker = dict(color = '#4dfa90'),text=(df2.perdis.apply(lambda x:str(x)) + '%'))
+        tracea=go.Scatter(x=df2.lockdown, y=df2.active, mode='lines+markers',name='active', marker_symbol=2,
+                           marker = dict(color = '#fa574b'),text=(df2.peractive.apply(lambda x:str(x)) + '%'))
+        data = [tracet, tracede,tracedi,tracea]
+        layout = dict(title = 'Lockdown-wise changes in cases',xaxis= dict(title= 'Date',zeroline= True),height=400)
+        fig2 = dict(data = data, layout = layout)
+        return fig2
 
     def top_4_states(self,df_statewise):
             from plotly.subplots import make_subplots

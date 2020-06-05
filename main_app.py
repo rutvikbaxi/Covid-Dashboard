@@ -123,6 +123,7 @@ elif location_type=='Overall India':
         if graph_type=='Bar':
             st.write(plt1.stack_bar(df_india,'India cases: overall'))
             st.write(plt1.stack_bar(df_india_daily,'India cases: daily'))
+            
         else:
             st.write(plt1.lineplot(df_india,'India total cases'))
             st.write(plt1.lineplot(df_india_daily,'India cases: daily'))
@@ -135,6 +136,7 @@ elif location_type=='Overall India':
             st.write(plt1.lineplot(df_india[-15:],'India cases: Last 15 days'))
             st.write(plt1.lineplot(df_india_daily[-15:],'India cases:  Daily count in last 15 days'))
     
+    st.write(plt1.lockdown(df_india))
     video_file = open('Covid_india_animation3.mp4', 'rb')
     video_bytes = video_file.read()
     st.video(video_bytes)
