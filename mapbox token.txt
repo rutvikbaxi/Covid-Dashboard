@@ -1,2 +1,5 @@
 sk.eyJ1IjoicnV0dmlrYmF4aSIsImEiOiJja2IwbWtpZXMwMmFhMnlsY3Uyc2ZsOXlzIn0.hAdXhMIhZYaAE-KuAd5KkA
 Mapbox covid19 secret token
+
+public
+pk.eyJ1IjoicnV0dmlrYmF4aSIsImEiOiJja2F6bGpzYXAwZXZuMnluczFzcjJicWRlIn0.WBKhU7BPKNKuZlgQrto6kQ

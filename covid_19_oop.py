@@ -234,6 +234,6 @@ class covid_plotter:
         df=df_statewise
         import plotly.express as px
         fig = px.scatter_mapbox(df, lat="Latitude", lon="Longitude", hover_name="loc",zoom=3, hover_data=["total", "active","deaths",'discharged'],size="total",color='total',color_continuous_scale='OrRd', height=300)
-        fig.update_layout(mapbox_style="dark", mapbox_accesstoken='sk.eyJ1IjoicnV0dmlrYmF4aSIsImEiOiJja2IwbWtpZXMwMmFhMnlsY3Uyc2ZsOXlzIn0.hAdXhMIhZYaAE-KuAd5KkA')
+        fig.update_layout(mapbox_style="dark", mapbox_accesstoken='pk.eyJ1IjoicnV0dmlrYmF4aSIsImEiOiJja2F6bGpzYXAwZXZuMnluczFzcjJicWRlIn0.WBKhU7BPKNKuZlgQrto6kQ')
         fig.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
         st.write(fig)
