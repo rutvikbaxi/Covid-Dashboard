@@ -29,7 +29,7 @@ df_statewise=pd.read_csv('df_statewise.csv')
 df_india_daily=pd.read_csv('df_india_daily.csv')
 df_daily_statewise=pd.read_csv('df_daily_statewise.csv')
 df_india_daily=df_india_daily[df_india_daily['active']>=0]
-
+#df_india_daily.reset_index(drop=True,inplace=True)
 #def main():
 HTML_t = """<div style="ovrflow-x:auto;color:white;border: 1px solid #e6e9ef; border-radius: 0.4rem;
 padding: 0.5rem; background-color:#377ed4 ;margin-bottom: 1rem; width: 250px;font-weight:500 ;float:left">Total: {}</div>"""
@@ -51,7 +51,7 @@ st.subheader('by Rutvik Baxi')
 st.write('')
 
 plt1=covid_plotter()
-
+################################
 #@st.cache
 # import pandas as pd
 # df_timestamp=pd.read_csv('df_timestamp.csv')
@@ -65,7 +65,7 @@ plt1=covid_plotter()
 #     df_timestamp.to_pickle('df_timestamp.pkl')
 #     df_timestamp.to_csv('df_timestamp.csv',index=False)
 
-location_type=st.sidebar.radio('Region of Interset',options=('Overall India','Individual States'))
+location_type=st.sidebar.radio('Menu',options=('Overall India','Individual States','About the page'))
 ##state data
 if location_type=='Individual States':
     st.subheader('State data')
@@ -153,3 +153,11 @@ elif location_type=='Overall India':
     cm = sns.light_palette("green", as_cmap=True)
     s = x.style.background_gradient(cmap=cm)
     st.dataframe(s,width=600)
+
+elif location_type=='About the page':
+    st.header('About the developer')
+    st.image('rutvik.jpg', width=150)
+    st.markdown(' “You can have data without information, but you cannot have information without data.” – Daniel Keys Moran')
+    st.markdown('Hello there! My name is Rutvik Baxi and I am currently an undergraduate student enrolled at the Department of Engineering Design at IIT Madras.  I enjoy learning new stuff which helps me expand my boundaries of knowledge and experience.I am highly enthusisatic about the field of Data Analytics and Machine Learning, and I enjoy how new stuff unrolls every day in this field. And in an attempt to implement all my learning, I have built this real-time dashboard to present the most severe issue of India in 2020: Covid19. It is an interactive dashboard with real time data and customized plots. This dashboard has been built using Streamlit and is mainly Python script. The data is updated every 24 hours. I will be glad to hear your thoughts or suggestions, you can reach out to me via [my LinkedIn](https://www.linkedin.com/in/rutvik-baxi).',unsafe_allow_html=True)
+    st.subheader('Acknowledgements')
+    st.write('The data used here is collected from an online API from api.rootnet.in. ')

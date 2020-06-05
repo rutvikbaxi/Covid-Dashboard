@@ -110,6 +110,10 @@ class covid_plotter:
     def lineplot(self,df,title_graph):
         import plotly.graph_objs as go
         from plotly.offline import init_notebook_mode,iplot,plot,download_plotlyjs
+        import pandas as pd
+        roll=df['active'].rolling(7).mean()
+        roll=roll.fillna(0) 
+        df['rollingactive']=pd.DataFrame(roll)
         tracet=go.Scatter(x=df.date, y=df.total, mode='lines+markers',name='total cases',marker_symbol=0,
                    marker = dict(color = '#4cd0f5'),)
         tracede=go.Scatter(x=df.date, y=df.deaths, mode='lines+markers',name='deaths',marker_symbol=4,
@@ -118,7 +122,9 @@ class covid_plotter:
                            marker = dict(color = '#4dfa90'),text=(df.perdis.apply(lambda x:str(x)) + '%'))
         tracea=go.Scatter(x=df.date, y=df.active, mode='lines+markers',name='active', marker_symbol=2,
                            marker = dict(color = '#fa574b'),text=(df.peractive.apply(lambda x:str(x)) + '%'))
-        data = [tracet, tracede,tracedi,tracea]
+        tracer=go.Scatter(x=df.date, y=df.rollingactive, mode='lines+markers',name='Moving average: Active cases last 7 days', marker_symbol=5,
+                           marker = dict(color = '#000000'),text=(df.rollingactive.apply(lambda x:str(x))))
+        data = [tracet, tracede,tracedi,tracea,tracer]
 
         layout = dict(title = title_graph,xaxis= dict(title= 'Date',zeroline= True),height=400)
 
@@ -128,10 +134,14 @@ class covid_plotter:
     def stack_bar(self,df,title_graph):
         import plotly.graph_objs as go
         from plotly.offline import init_notebook_mode,iplot,plot,download_plotlyjs
+        roll=df['active'].rolling(7).mean()
+        roll=roll.fillna(0) 
+        df['rollingactive']=pd.DataFrame(roll)
         fig = go.Figure(data=[
         go.Bar(name='Active',    x=df.date, y=df.active,marker=dict(color='#fa574b')),
         go.Bar(name='Discharged',x=df.date, y=df.discharged,marker=dict(color='#4dfa90')),
         go.Bar(name='Deaths',    x=df.date, y=df.deaths,marker=dict(color='#4cd0f5')),
+        go.Scatter(name='Moving average:Active cases last 7 days', x=df.date, y=df.rollingactive ,marker=dict(color='#000000')),
         #go.Bar(name='Active',    x=df.date, y=df.active,marker=dict(color='#c72014')),
         ])
         fig.update_layout(barmode='stack',title=title_graph,height=400)
@@ -150,8 +160,6 @@ class covid_plotter:
         fig.add_trace(go.Scatter(x=df_statewise[df_statewise['loc']==min_4[1]]['date'],y=df_statewise[df_statewise['loc']==min_4[1]]['total']),row=1, col=2)
         fig.add_trace(go.Scatter(x=df_statewise[df_statewise['loc']==min_4[2]]['date'],y=df_statewise[df_statewise['loc']==min_4[2]]['total']),row=2, col=1)
         fig.add_trace(go.Scatter(x=df_statewise[df_statewise['loc']==min_4[3]]['date'],y=df_statewise[df_statewise['loc']==min_4[3]]['total']),row=2, col=2)
-
-
         fig.update_layout(height=500, width=700,
                         title_text="States with highest active cases")
         return fig
