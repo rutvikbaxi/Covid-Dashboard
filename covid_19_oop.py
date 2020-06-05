@@ -117,12 +117,12 @@ class covid_plotter:
         tracet=go.Scatter(x=df.date, y=df.total, mode='lines+markers',name='total cases',marker_symbol=0,
                    marker = dict(color = '#4cd0f5'),)
         tracede=go.Scatter(x=df.date, y=df.deaths, mode='lines+markers',name='deaths',marker_symbol=4,
-                           marker = dict(color = '#000000'),text=(df.perdeath.apply(lambda x:str(x)) + '%'))
+                           marker = dict(color = '#6e6b63'),text=(df.perdeath.apply(lambda x:str(x)) + '%'))
         tracedi=go.Scatter(x=df.date, y=df.discharged, mode='lines+markers',name='discharged', marker_symbol=6,
                            marker = dict(color = '#4dfa90'),text=(df.perdis.apply(lambda x:str(x)) + '%'))
         tracea=go.Scatter(x=df.date, y=df.active, mode='lines+markers',name='active', marker_symbol=2,
                            marker = dict(color = '#fa574b'),text=(df.peractive.apply(lambda x:str(x)) + '%'))
-        tracer=go.Scatter(x=df.date, y=df.rollingactive, mode='lines+markers',name='Moving average: Active cases last 7 days', marker_symbol=5,
+        tracer=go.Scatter(x=df.date, y=df.rollingactive, mode='lines',name='Last 7 days average', marker_symbol=5,
                            marker = dict(color = '#000000'),text=(df.rollingactive.apply(lambda x:str(x))))
         data = [tracet, tracede,tracedi,tracea,tracer]
 
@@ -138,20 +138,15 @@ class covid_plotter:
         roll=roll.fillna(0) 
         df['rollingactive']=pd.DataFrame(roll)
         fig = go.Figure(data=[
-        go.Bar(name='Active',    x=df.date, y=df.active,marker=dict(color='#fa574b')),
-        go.Bar(name='Discharged',x=df.date, y=df.discharged,marker=dict(color='#4dfa90')),
-        go.Bar(name='Deaths',    x=df.date, y=df.deaths,marker=dict(color='#4cd0f5')),
-        go.Scatter(name='Moving average:Active cases last 7 days', x=df.date, y=df.rollingactive ,marker=dict(color='#000000')),
+        go.Bar(name='Active',    x=df.date, y=df.active,marker=dict(color='#fa574b'),hovertext=(df.peractive.apply(lambda x:str(x)) + '%')),
+        go.Bar(name='Discharged',x=df.date, y=df.discharged,marker=dict(color='#4dfa90'),hovertext=(df.perdis.apply(lambda x:str(x)) + '%')),
+        go.Bar(name='Deaths',    x=df.date, y=df.deaths,marker=dict(color='#4cd0f5'),hovertext=(df.perdeath.apply(lambda x:str(x)) + '%')),
+        go.Scatter(name='Last 7 days average', x=df.date, y=df.rollingactive ,marker=dict(color='#000000'),hovertext=(df.rollingactive.apply(lambda x:str(x)) + '%')),
         #go.Bar(name='Active',    x=df.date, y=df.active,marker=dict(color='#c72014')),
         ])
         fig.update_layout(barmode='stack',title=title_graph,height=400)
         return fig
     
-    def top_4_states(self,df_statewise):
-        from plotly.subplots import make_subplots
-        import plotly.express as px
-        import plotly.graph_objects as go
-
         min_4=df_statewise[-35:].sort_values('active',ascending=False)[:4]['loc'].values
         fig = make_subplots(rows=2, cols=2,
                             subplot_titles=min_4)
@@ -164,6 +159,43 @@ class covid_plotter:
                         title_text="States with highest active cases")
         return fig
 
+
+    def top_4_states(self,df_statewise):
+            from plotly.subplots import make_subplots
+            import plotly.graph_objects as go
+
+            df2=df_statewise[-35:].sort_values('active',ascending=False)[['active','total','loc']].reset_index(drop=True)
+            df2.loc[4:,'loc']='Other states'
+            labels=df2['loc']
+            valuesa=df2['active']
+            valuest=df2['total']
+            fig = make_subplots(rows=1, cols=2, specs=[[{'type':'domain'}, {'type':'domain'}]])
+            fig.add_trace(go.Pie(labels=labels, values=valuesa, name="Active"),
+                        1, 1)
+            fig.add_trace(go.Pie(labels=labels, values=valuest, name="Total"),
+                        1, 2)
+            fig.update_traces(hole=.4, hoverinfo="label+percent+name")
+            fig.update_layout(
+                title_text="Contribution of top 4 states(by number of active cases) in India",
+                # Add annotations in the center of the donut pies.
+                annotations=[dict(text='Active', x=0.18, y=0.5, font_size=16, showarrow=False),
+                            dict(text='Total', x=0.82, y=0.5, font_size=16, showarrow=False)])
+            st.write(fig)
+
+            min_4=df_statewise[-35:].sort_values('active',ascending=False)[:4]['loc'].values
+            fig = make_subplots(rows=2, cols=2,
+                                subplot_titles=min_4)
+                                
+            fig.add_trace(go.Scatter(x=df_statewise[df_statewise['loc']==min_4[0]]['date'],y=df_statewise[df_statewise['loc']==min_4[0]]['total']),row=1, col=1)
+            fig.add_trace(go.Scatter(x=df_statewise[df_statewise['loc']==min_4[1]]['date'],y=df_statewise[df_statewise['loc']==min_4[1]]['total']),row=1, col=2)
+            fig.add_trace(go.Scatter(x=df_statewise[df_statewise['loc']==min_4[2]]['date'],y=df_statewise[df_statewise['loc']==min_4[2]]['total']),row=2, col=1)
+            fig.add_trace(go.Scatter(x=df_statewise[df_statewise['loc']==min_4[3]]['date'],y=df_statewise[df_statewise['loc']==min_4[3]]['total']),row=2, col=2)
+
+
+            fig.update_layout(height=500, width=700,
+                            title_text="States with highest active cases")
+            return fig
+    
     def top_10_states(self,df_statewise):
         import plotly.graph_objects as go
         df_statewise=pd.read_csv('df_statewise.csv')
@@ -202,6 +234,6 @@ class covid_plotter:
         df=df_statewise
         import plotly.express as px
         fig = px.scatter_mapbox(df, lat="Latitude", lon="Longitude", hover_name="loc",zoom=3, hover_data=["total", "active","deaths",'discharged'],size="total",color='total',color_continuous_scale='OrRd', height=300)
-        fig.update_layout(mapbox_style="dark", mapbox_accesstoken='pk.eyJ1IjoicnV0dmlrYmF4aSIsImEiOiJja2F6bGpzYXAwZXZuMnluczFzcjJicWRlIn0.WBKhU7BPKNKuZlgQrto6kQ')
+        fig.update_layout(mapbox_style="dark", mapbox_accesstoken='sk.eyJ1IjoicnV0dmlrYmF4aSIsImEiOiJja2IwbWtpZXMwMmFhMnlsY3Uyc2ZsOXlzIn0.hAdXhMIhZYaAE-KuAd5KkA')
         fig.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
         st.write(fig)
