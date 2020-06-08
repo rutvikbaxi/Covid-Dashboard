@@ -54,8 +54,8 @@ plt1=covid_plotter()
 ################################
 #@st.cache
 # import pandas as pd
-# df_timestamp=pd.read_csv('df_timestamp.csv')
-# timestamp=pd.to_datetime(df_timestamp.loc[0].values[0])
+df_timestamp=pd.read_csv('df_timestamp.csv')
+timestamp=pd.to_datetime(df_timestamp.loc[0].values[0])
 # from datetime import datetime
 # if (datetime.now().hour<9) or (((datetime.today()-timestamp).seconds/3600 + (datetime.today()-timestamp).days*24) >24):
 #     bar_chart_race_plot(df_statewise,df_india)
@@ -100,7 +100,9 @@ if location_type=='Individual States':
     tperdeath=str(df_statewise[-35:][df_statewise['loc']==state]['perdeath'].values[0])
     st.markdown(t.format(f'{ttotal:,.0f}',f'{tactive:,.0f}',tperactive,f'{tdis:,.0f}',tperdis,f'{tdeaths:,.0f}',tperdeath), unsafe_allow_html=True)
     st.write('')
-    st.write('as of  ',str(datetime.now()).split()[0])
+    #st.write('as of  ',str(datetime.now()).split()[0])
+    st.write('last updated on ',str(timestamp),' IST'  )  
+
     st.write('')
 
     st.write(plt1.top_10_states(df_statewise))
@@ -115,7 +117,8 @@ elif location_type=='Overall India':
     tperdeath=str(df_india[-1:]['perdeath'].values[0])
     st.markdown(t.format(f'{ttotal:,.0f}',f'{tactive:,.0f}',tperactive,f'{tdis:,.0f}',tperdis,f'{tdeaths:,.0f}',tperdeath), unsafe_allow_html=True)
     st.write('')
-    st.write('as of  ',str(datetime.now()).split()[0])
+    #st.write('as of  ',str(datetime.now()).split()[0])
+    st.write('last updated on ',str(timestamp),' IST' )  
     st.write('')
     graph_type=st.selectbox('Type of Graph',options=('Bar','Line'))
     date_range=st.radio(' ',options=('Overall','Last 15 days'))

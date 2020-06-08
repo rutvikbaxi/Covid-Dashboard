@@ -204,10 +204,10 @@ class covid_plotter:
             fig = make_subplots(rows=2, cols=2,
                                 subplot_titles=min_4)
                                 
-            fig.add_trace(go.Scatter(x=df_statewise[df_statewise['loc']==min_4[0]]['date'],y=df_statewise[df_statewise['loc']==min_4[0]]['total']),row=1, col=1)
-            fig.add_trace(go.Scatter(x=df_statewise[df_statewise['loc']==min_4[1]]['date'],y=df_statewise[df_statewise['loc']==min_4[1]]['total']),row=1, col=2)
-            fig.add_trace(go.Scatter(x=df_statewise[df_statewise['loc']==min_4[2]]['date'],y=df_statewise[df_statewise['loc']==min_4[2]]['total']),row=2, col=1)
-            fig.add_trace(go.Scatter(x=df_statewise[df_statewise['loc']==min_4[3]]['date'],y=df_statewise[df_statewise['loc']==min_4[3]]['total']),row=2, col=2)
+            fig.add_trace(go.Scatter(x=df_statewise[df_statewise['loc']==min_4[0]]['date'],y=df_statewise[df_statewise['loc']==min_4[0]]['active']),row=1, col=1)
+            fig.add_trace(go.Scatter(x=df_statewise[df_statewise['loc']==min_4[1]]['date'],y=df_statewise[df_statewise['loc']==min_4[1]]['active']),row=1, col=2)
+            fig.add_trace(go.Scatter(x=df_statewise[df_statewise['loc']==min_4[2]]['date'],y=df_statewise[df_statewise['loc']==min_4[2]]['active']),row=2, col=1)
+            fig.add_trace(go.Scatter(x=df_statewise[df_statewise['loc']==min_4[3]]['date'],y=df_statewise[df_statewise['loc']==min_4[3]]['active']),row=2, col=2)
 
 
             fig.update_layout(height=500, width=700,
