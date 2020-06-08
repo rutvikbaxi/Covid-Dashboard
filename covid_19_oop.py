@@ -23,7 +23,7 @@ class covid_india:
         df_timestamp=pd.read_csv('df_timestamp.csv')
         timestamp=pd.to_datetime(df_timestamp.loc[0].values[0])
         from datetime import datetime
-        if (datetime.now().hour==15) or (((datetime.today()-timestamp).seconds/3600 + (datetime.today()-timestamp).days*24) >24):
+        if (((datetime.today()-timestamp).seconds/3600 + (datetime.today()-timestamp).days*24) >24):
             import json
             import urllib
             import time
