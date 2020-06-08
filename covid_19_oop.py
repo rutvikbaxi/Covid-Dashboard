@@ -23,7 +23,8 @@ class covid_india:
         df_timestamp=pd.read_csv('df_timestamp.csv')
         timestamp=pd.to_datetime(df_timestamp.loc[0].values[0])
         from datetime import datetime
-        if (((datetime.today()-timestamp).seconds/3600 + (datetime.today()-timestamp).days*24) >24):
+        from datetime import timedelta
+        if ((((datetime.today()+ timedelta(seconds=19800))-timestamp).seconds/3600 + ((datetime.today()+ timedelta(seconds=19800))-timestamp).days*24) >24):
             import json
             import urllib
             import time
@@ -101,7 +102,7 @@ class covid_india:
             #map_plot()
 
             #refresh the timestamp
-            timestamp=datetime.today()
+            timestamp=datetime.today()+ timedelta(seconds=19800)
             df_timestamp=pd.DataFrame()
             df_timestamp.loc[0,0]=timestamp
             df_timestamp.to_pickle('df_timestamp.pkl')
@@ -139,7 +140,7 @@ class covid_plotter:
         go.Bar(name='Active',    x=df.date, y=df.active,marker=dict(color='#fa574b'),hovertext=(df.peractive.apply(lambda x:str(x)) + '%')),
         go.Bar(name='Discharged',x=df.date, y=df.discharged,marker=dict(color='#4dfa90'),hovertext=(df.perdis.apply(lambda x:str(x)) + '%')),
         go.Bar(name='Deaths',    x=df.date, y=df.deaths,marker=dict(color='#4cd0f5'),hovertext=(df.perdeath.apply(lambda x:str(x)) + '%')),
-        go.Scatter(name='Last 7 days average', x=df.date, y=df.rollingactive ,marker=dict(color='#000000'),hovertext=(df.rollingactive.apply(lambda x:str(x)) + '%')),
+        go.Scatter(name='Last 7 days average', x=df.date, y=df.rollingactive ,marker=dict(color='#000000'),hovertext=(df.rollingactive.apply(lambda x:str(x)))),
         ])
         fig1.update_layout(barmode='stack',title=title_graph,height=400)
 

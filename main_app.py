@@ -5,6 +5,7 @@ from plotly import graph_objs as go
 from plotly.offline import iplot,plot,download_plotlyjs,init_notebook_mode
 from covid_19_oop import covid_india,covid_plotter
 from datetime import datetime 
+from datetime import timedelta
 from functions import *
 
 ######
@@ -56,14 +57,6 @@ plt1=covid_plotter()
 # import pandas as pd
 df_timestamp=pd.read_csv('df_timestamp.csv')
 timestamp=pd.to_datetime(df_timestamp.loc[0].values[0])
-# from datetime import datetime
-# if (datetime.now().hour<9) or (((datetime.today()-timestamp).seconds/3600 + (datetime.today()-timestamp).days*24) >24):
-#     bar_chart_race_plot(df_statewise,df_india)
-#     timestamp=datetime.today()
-#     df_timestamp=pd.DataFrame()
-#     df_timestamp.loc[0,0]=timestamp
-#     df_timestamp.to_pickle('df_timestamp.pkl')
-#     df_timestamp.to_csv('df_timestamp.csv',index=False)
 
 location_type=st.sidebar.radio('Menu',options=('Overall India','Individual States','About the page'))
 ##state data
@@ -100,8 +93,8 @@ if location_type=='Individual States':
     tperdeath=str(df_statewise[-35:][df_statewise['loc']==state]['perdeath'].values[0])
     st.markdown(t.format(f'{ttotal:,.0f}',f'{tactive:,.0f}',tperactive,f'{tdis:,.0f}',tperdis,f'{tdeaths:,.0f}',tperdeath), unsafe_allow_html=True)
     st.write('')
-    st.write('as of  ',str(datetime.now()).split()[0])
-    #st.write('last updated on ',str(timestamp),' IST'  )  
+    #st.write('as of  ',str(datetime.now()).split()[0])
+    st.write('last updated on ',timestamp,' IST'  )  
 
     st.write('')
 
@@ -117,8 +110,8 @@ elif location_type=='Overall India':
     tperdeath=str(df_india[-1:]['perdeath'].values[0])
     st.markdown(t.format(f'{ttotal:,.0f}',f'{tactive:,.0f}',tperactive,f'{tdis:,.0f}',tperdis,f'{tdeaths:,.0f}',tperdeath), unsafe_allow_html=True)
     st.write('')
-    st.write('as of  ',str(datetime.now()).split()[0])
-    #st.write('last updated on ',str(timestamp),' IST' )  
+    #st.write('as of  ',str(datetime.now()).split()[0])
+    st.write('last updated on ',timestamp,' IST' )  
     st.write('')
     graph_type=st.selectbox('Type of Graph',options=('Bar','Line'))
     date_range=st.radio(' ',options=('Overall','Last 15 days'))
@@ -158,7 +151,7 @@ elif location_type=='Overall India':
     cm = sns.light_palette("green", as_cmap=True)
     s = x.style.background_gradient(cmap=cm)
     st.dataframe(s,width=600)
-    #st.write('current time: ',str(datetime.today()))
+    st.write('current time: ',(datetime.today() + timedelta(seconds=19800)))
 
 elif location_type=='About the page':
     st.header('About the developer')
