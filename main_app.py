@@ -158,6 +158,7 @@ elif location_type=='Overall India':
     cm = sns.light_palette("green", as_cmap=True)
     s = x.style.background_gradient(cmap=cm)
     st.dataframe(s,width=600)
+    st.write('current time: ',str(datetime.today()))
 
 elif location_type=='About the page':
     st.header('About the developer')
