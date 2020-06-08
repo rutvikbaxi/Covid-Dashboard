@@ -100,8 +100,8 @@ if location_type=='Individual States':
     tperdeath=str(df_statewise[-35:][df_statewise['loc']==state]['perdeath'].values[0])
     st.markdown(t.format(f'{ttotal:,.0f}',f'{tactive:,.0f}',tperactive,f'{tdis:,.0f}',tperdis,f'{tdeaths:,.0f}',tperdeath), unsafe_allow_html=True)
     st.write('')
-    #st.write('as of  ',str(datetime.now()).split()[0])
-    st.write('last updated on ',str(timestamp),' IST'  )  
+    st.write('as of  ',str(datetime.now()).split()[0])
+    #st.write('last updated on ',str(timestamp),' IST'  )  
 
     st.write('')
 
@@ -117,8 +117,8 @@ elif location_type=='Overall India':
     tperdeath=str(df_india[-1:]['perdeath'].values[0])
     st.markdown(t.format(f'{ttotal:,.0f}',f'{tactive:,.0f}',tperactive,f'{tdis:,.0f}',tperdis,f'{tdeaths:,.0f}',tperdeath), unsafe_allow_html=True)
     st.write('')
-    #st.write('as of  ',str(datetime.now()).split()[0])
-    st.write('last updated on ',str(timestamp),' IST' )  
+    st.write('as of  ',str(datetime.now()).split()[0])
+    #st.write('last updated on ',str(timestamp),' IST' )  
     st.write('')
     graph_type=st.selectbox('Type of Graph',options=('Bar','Line'))
     date_range=st.radio(' ',options=('Overall','Last 15 days'))
@@ -158,7 +158,7 @@ elif location_type=='Overall India':
     cm = sns.light_palette("green", as_cmap=True)
     s = x.style.background_gradient(cmap=cm)
     st.dataframe(s,width=600)
-    st.write('current time: ',str(datetime.today()))
+    #st.write('current time: ',str(datetime.today()))
 
 elif location_type=='About the page':
     st.header('About the developer')
