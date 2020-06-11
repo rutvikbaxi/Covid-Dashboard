@@ -18,8 +18,6 @@ class covid_india:
     def __init__(self):
         #import datetime
         import pandas as pd
-        #df_timestamp=pd.read_pickle('df_timestamp.pkl')
-        #timestamp=df_timestamp.loc[0,0]
         df_timestamp=pd.read_csv('df_timestamp.csv')
         timestamp=pd.to_datetime(df_timestamp.loc[0].values[0])
         from datetime import datetime
@@ -145,7 +143,7 @@ class covid_plotter:
         fig1.update_layout(barmode='stack',title=title_graph,height=400)
 
         return fig1
-    
+
         min_4=df_statewise[-35:].sort_values('active',ascending=False)[:4]['loc'].values
         fig = make_subplots(rows=2, cols=2,
                             subplot_titles=min_4)
@@ -244,6 +242,7 @@ class covid_plotter:
 
     def map_plot(self,df_statewise):
         df_coords_state=pd.read_csv('state wise centroids_2011.csv')
+        df_statewise=df_statewise[df_statewise['loc']!='Daman & Diu']
         df_statewise=df_statewise[-35:]
         df_statewise=df_statewise[['loc','total','active','deaths','discharged']]
         df_statewise.reset_index(inplace=True, drop=True)

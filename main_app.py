@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+import numpy as np
 import seaborn as sns
 from plotly import graph_objs as go
 from plotly.offline import iplot,plot,download_plotlyjs,init_notebook_mode
@@ -10,8 +11,6 @@ from functions import *
 
 #######
 #for import
-import pydeck as pdk
-
 
 
 @st.cache
@@ -63,7 +62,8 @@ location_type=st.sidebar.radio('Menu',options=('Overall India','Individual State
 if location_type=='Individual States':
     st.subheader('State data')
     st.write(plt1.top_4_states(df_statewise))
-    state=st.selectbox('States',df_statewise['loc'].unique())
+    #state=st.selectbox('States',df_statewise['loc'].unique())
+    state=st.selectbox('States',np.delete(df_statewise['loc'].unique(),np.where(df_statewise['loc'].unique()=='Andaman and Nicobar Islands')))
     graph_type=st.radio('Type of Graph',options=('Bar','Line'))
     date_range=st.radio(' ',options=('Overall','Last 15 days'))
     #st.write(plt1.lineplot(df_statewise[df_statewise['loc']==state],'Local total cases'))
@@ -151,7 +151,7 @@ elif location_type=='Overall India':
     cm = sns.light_palette("green", as_cmap=True)
     s = x.style.background_gradient(cmap=cm)
     st.dataframe(s,width=600)
-    st.write('current time: ',(datetime.today() + timedelta(seconds=19800)))
+    st.write('current time: ',(datetime.today() + timedelta(seconds=19800)), 'IST')
 
 elif location_type=='About the page':
     st.header('About the developer')
