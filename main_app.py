@@ -29,6 +29,8 @@ df_statewise=pd.read_csv('df_statewise.csv')
 df_india_daily=pd.read_csv('df_india_daily.csv')
 df_daily_statewise=pd.read_csv('df_daily_statewise.csv')
 df_india_daily=df_india_daily[df_india_daily['active']>=0]
+df_statewise.loc[df_statewise['loc']=='Telangana','loc']='Telengana'
+df_statewise.loc[df_statewise['loc']=='Dadra and Nagar Haveli and Daman and Diu','loc']='Dadar Nagar Haveli'
 #df_india_daily.reset_index(drop=True,inplace=True)
 #def main():
 HTML_t = """<div style="ovrflow-x:auto;color:white;border: 1px solid #e6e9ef; border-radius: 0.4rem;
