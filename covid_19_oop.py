@@ -22,7 +22,9 @@ class covid_india:
         timestamp=pd.to_datetime(df_timestamp.loc[0].values[0])
         from datetime import datetime
         from datetime import timedelta
-        if ((((datetime.today()+ timedelta(seconds=19800))-timestamp).seconds/3600 + ((datetime.today()+ timedelta(seconds=19800))-timestamp).days*24) >24):
+        time_elapsed=(((datetime.today()+ timedelta(seconds=19800))-timestamp).seconds/3600 + ((datetime.today()+ timedelta(seconds=19800))-timestamp).days*24)
+        st.write('Hours passed since last refresh',time_elapsed)
+        if (time_elapsed >24):
             import json
             import urllib
             import time
