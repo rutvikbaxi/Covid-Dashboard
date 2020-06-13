@@ -23,7 +23,6 @@ class covid_india:
         from datetime import datetime
         from datetime import timedelta
         time_elapsed=(((datetime.today()+ timedelta(seconds=19800))-timestamp).seconds/3600 + ((datetime.today()+ timedelta(seconds=19800))-timestamp).days*24)
-        st.write('Hours passed since last refresh',time_elapsed)
         if (time_elapsed >24):
             import json
             import urllib

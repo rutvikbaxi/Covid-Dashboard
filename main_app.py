@@ -97,6 +97,10 @@ if location_type=='Individual States':
     st.write('')
     #st.write('as of  ',str(datetime.now()).split()[0])
     st.write('last updated on ',timestamp,' IST'  )  
+    time_elapsed=(((datetime.today()+ timedelta(seconds=19800))-timestamp).seconds/3600 + ((datetime.today()+ timedelta(seconds=19800))-timestamp).days*24)
+
+    st.write('Hours passed since last refresh',time_elapsed)
+
 
     st.write('')
 
