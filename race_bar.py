@@ -57,21 +57,23 @@ def bar_chart_race_plot(df_statewise,df_india):
     date_list = list(df_india['date'].unique())
 
     #@st.cache
-    def animate(fig, draw_barchart,date_list):
-        fig, ax = plt.subplots(figsize=(15, 9))
-        #animator = animation.FuncAnimation(fig, draw_barchart, frames=date_list)
+    #def animate(fig, draw_barchart,date_list):
+    fig, ax = plt.subplots(figsize=(15, 9))
+    animator = animation.FuncAnimation(fig, draw_barchart, frames=date_list)
         #st.write(animator.to_html5_video(),unsafe_allow_html=True)
 
-    animate(fig, draw_barchart,date_list)
-    #animator.save('Covid_india_animation3.gif',writer='ffmpeg',fps=4)
-    #import moviepy.editor as mp
-    #clip = mp.VideoFileClip("Covid_india_animation3.gif")
-    #clip.write_videofile("Covid_india_animation3.mp4")
+    #animate(fig, draw_barchart,date_list)
+    animator.save('Covid_india_animation3.gif',fps=4)#writer='ffmpeg',
+    import moviepy.editor as mp
+    clip = mp.VideoFileClip("Covid_india_animation3.gif")
+    clip.write_videofile("Covid_india_animation3.mp4")
 
 import streamlit as st
 import pandas as pd
 df_india=pd.read_csv('df_india.csv')
 df_statewise=pd.read_csv('df_statewise.csv')
+df_statewise.loc[df_statewise['loc']=='Telangana','loc']='Telengana'
+df_statewise.loc[df_statewise['loc']=='Dadra and Nagar Haveli and Daman and Diu','loc']='Dadar Nagar Haveli'
 bar_chart_race_plot(df_statewise,df_india)
 
 #video_file = open('Covid_india_animation3.mp4', 'rb')

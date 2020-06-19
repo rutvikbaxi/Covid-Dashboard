@@ -12,6 +12,24 @@ from functions import *
 #######
 #for import
 
+HTML_t = """<div style="ovrflow-x:auto;color:white;border: 1px solid #e6e9ef; border-radius: 0.4rem;
+padding: 0.5rem; background-color:#377ed4 ;margin-bottom: 1rem; width: 250px;font-weight:500 ;float:left">Total: {}</div>"""
+HTML_a = """<div style="ovrflow-x:auto;color:#a8192b;border: 1px solid #e6e9ef; border-radius: 0.4rem;
+padding: 0.5rem; background-color:#ed939e ;margin-bottom: 1rem; width: 250px;font-weight:500 ; float:left">Active    {} <br> {}%</div>"""
+HTML_de= """<div style="ovrflow-x:auto;color:white;border: 1px solid #e6e9ef; border-radius: 0.4rem;
+padding: 0.5rem; background-color:#2c3632 ;margin-bottom: 1rem; width: 250px; font-weight:500 ;float:left">Deaths    {}  <br>   {}%</div>"""
+
+def local_css(file_name):
+    with open(file_name) as f:
+        st.markdown('<style>{}</style>'.format(f.read()), unsafe_allow_html=True)
+
+local_css("style.css")
+t = "<div><NOBR><span class='highlight blue'>Total: {} </span> <span>&nbsp</span> <span class='highlight red'>Active: {}  {}% </span> <span>&nbsp</span> <span class='highlight green'>Recovered: {} {}% </span> <span>&nbsp</span> <span class='highlight black'>Death: {} {}% </span> <span>&nbsp</span></NOBR></div>"
+title = "<div><h1><span class='ho'>Covid19</span>&nbsp <span class='hb'>India</span>&nbsp <span class='hg'>Dashboard</span>&nbsp </h1></div>"
+st.markdown(title,unsafe_allow_html=True)
+#st.title('Covid19 Dashboard')
+st.subheader('by Rutvik Baxi')
+st.write('')
 
 @st.cache
 def load_data():
@@ -33,24 +51,7 @@ df_statewise.loc[df_statewise['loc']=='Telangana','loc']='Telengana'
 df_statewise.loc[df_statewise['loc']=='Dadra and Nagar Haveli and Daman and Diu','loc']='Dadar Nagar Haveli'
 #df_india_daily.reset_index(drop=True,inplace=True)
 #def main():
-HTML_t = """<div style="ovrflow-x:auto;color:white;border: 1px solid #e6e9ef; border-radius: 0.4rem;
-padding: 0.5rem; background-color:#377ed4 ;margin-bottom: 1rem; width: 250px;font-weight:500 ;float:left">Total: {}</div>"""
-HTML_a = """<div style="ovrflow-x:auto;color:#a8192b;border: 1px solid #e6e9ef; border-radius: 0.4rem;
-padding: 0.5rem; background-color:#ed939e ;margin-bottom: 1rem; width: 250px;font-weight:500 ; float:left">Active    {} <br> {}%</div>"""
-HTML_de= """<div style="ovrflow-x:auto;color:white;border: 1px solid #e6e9ef; border-radius: 0.4rem;
-padding: 0.5rem; background-color:#2c3632 ;margin-bottom: 1rem; width: 250px; font-weight:500 ;float:left">Deaths    {}  <br>   {}%</div>"""
 
-def local_css(file_name):
-    with open(file_name) as f:
-        st.markdown('<style>{}</style>'.format(f.read()), unsafe_allow_html=True)
-
-local_css("style.css")
-t = "<div><NOBR><span class='highlight blue'>Total: {} </span> <span>&nbsp</span> <span class='highlight red'>Active: {}  {}% </span> <span>&nbsp</span> <span class='highlight green'>Recovered: {} {}% </span> <span>&nbsp</span> <span class='highlight black'>Death: {} {}% </span> <span>&nbsp</span></NOBR></div>"
-title = "<div><h1><span class='ho'>Covid19</span>&nbsp <span class='hb'>India</span>&nbsp <span class='hg'>Dashboard</span>&nbsp </h1></div>"
-st.markdown(title,unsafe_allow_html=True)
-#st.title('Covid19 Dashboard')
-st.subheader('by Rutvik Baxi')
-st.write('')
 
 plt1=covid_plotter()
 ################################
