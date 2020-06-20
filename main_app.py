@@ -23,6 +23,7 @@ def local_css(file_name):
     with open(file_name) as f:
         st.markdown('<style>{}</style>'.format(f.read()), unsafe_allow_html=True)
 
+
 local_css("style.css")
 t = "<div><NOBR><span class='highlight blue'>Total: {} </span> <span>&nbsp</span> <span class='highlight red'>Active: {}  {}% </span> <span>&nbsp</span> <span class='highlight green'>Recovered: {} {}% </span> <span>&nbsp</span> <span class='highlight black'>Death: {} {}% </span> <span>&nbsp</span></NOBR></div>"
 title = "<div><h1><span class='ho'>Covid19</span>&nbsp <span class='hb'>India</span>&nbsp <span class='hg'>Dashboard</span>&nbsp </h1></div>"
@@ -30,7 +31,9 @@ st.markdown(title,unsafe_allow_html=True)
 #st.title('Covid19 Dashboard')
 st.subheader('by Rutvik Baxi')
 st.write('')
-
+df_timestamp=pd.read_csv('df_timestamp.csv')
+timestamp=pd.to_datetime(df_timestamp.loc[0].values[0])
+st.write('ignore this line ',timestamp+timedelta(seconds=19800),' IST')
 @st.cache
 def load_data():
     data1=covid_india()
@@ -97,8 +100,8 @@ if location_type=='Individual States':
     st.markdown(t.format(f'{ttotal:,.0f}',f'{tactive:,.0f}',tperactive,f'{tdis:,.0f}',tperdis,f'{tdeaths:,.0f}',tperdeath), unsafe_allow_html=True)
     st.write('')
     #st.write('as of  ',str(datetime.now()).split()[0])
-    st.write('last updated on ',timestamp,' IST'  )  
-    time_elapsed=(((datetime.today()+ timedelta(seconds=19800))-timestamp).seconds/3600 + ((datetime.today()+ timedelta(seconds=19800))-timestamp).days*24)
+    st.write('last updated on ',timestamp+ timedelta(seconds=19800),' IST'  )  
+    time_elapsed=(((datetime.today())-timestamp).seconds/3600 + ((datetime.today())-timestamp).days*24)
 
     st.write('Hours passed since last refresh',time_elapsed)
 
@@ -118,7 +121,7 @@ elif location_type=='Overall India':
     st.markdown(t.format(f'{ttotal:,.0f}',f'{tactive:,.0f}',tperactive,f'{tdis:,.0f}',tperdis,f'{tdeaths:,.0f}',tperdeath), unsafe_allow_html=True)
     st.write('')
     #st.write('as of  ',str(datetime.now()).split()[0])
-    st.write('last updated on ',timestamp,' IST' )  
+    st.write('last updated on ',timestamp+ timedelta(seconds=19800),' IST' )  
     st.write('')
     graph_type=st.selectbox('Type of Graph',options=('Bar','Line'))
     date_range=st.radio(' ',options=('Overall','Last 15 days'))
