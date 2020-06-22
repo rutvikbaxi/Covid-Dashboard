@@ -23,7 +23,7 @@ class covid_india:
         from datetime import datetime
         from datetime import timedelta
         time_elapsed=(((datetime.today())-timestamp).seconds/3600 + ((datetime.today())-timestamp).days*24)
-        if (datetime.today().hour==14 or time_elapsed >24):
+        if (time_elapsed >24):
             import json
             import urllib
             import time

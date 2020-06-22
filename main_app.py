@@ -31,9 +31,7 @@ st.markdown(title,unsafe_allow_html=True)
 #st.title('Covid19 Dashboard')
 st.subheader('by Rutvik Baxi')
 st.write('')
-df_timestamp=pd.read_csv('df_timestamp.csv')
-timestamp=pd.to_datetime(df_timestamp.loc[0].values[0])
-st.write('ignore this line ',timestamp+timedelta(seconds=19800),' IST')
+
 @st.cache
 def load_data():
     data1=covid_india()
@@ -101,13 +99,7 @@ if location_type=='Individual States':
     st.write('')
     #st.write('as of  ',str(datetime.now()).split()[0])
     st.write('last updated on ',timestamp+ timedelta(seconds=19800),' IST'  )  
-    time_elapsed=(((datetime.today())-timestamp).seconds/3600 + ((datetime.today())-timestamp).days*24)
-
-    st.write('Hours passed since last refresh',time_elapsed)
-
-
     st.write('')
-
     st.write(plt1.top_10_states(df_statewise))
     
 elif location_type=='Overall India':
@@ -158,6 +150,7 @@ elif location_type=='Overall India':
     st.write('')
     st.subheader('Statewise-count as of {}'.format(datetime.today().date()))
     x=df_statewise[-35:].sort_values('total',ascending=False)[['loc','total','active','discharged','deaths']]
+    x.reset_index(drop=True,inpace=True)
     cm = sns.light_palette("green", as_cmap=True)
     s = x.style.background_gradient(cmap=cm)
     st.dataframe(s,width=600)

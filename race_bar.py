@@ -61,12 +61,8 @@ def bar_chart_race_plot(df_statewise,df_india):
     fig, ax = plt.subplots(figsize=(15, 9))
     animator = animation.FuncAnimation(fig, draw_barchart, frames=date_list)
         #st.write(animator.to_html5_video(),unsafe_allow_html=True)
-
+    return animator
     #animate(fig, draw_barchart,date_list)
-    animator.save('Covid_india_animation3.gif',fps=4)#writer='ffmpeg',
-    import moviepy.editor as mp
-    clip = mp.VideoFileClip("Covid_india_animation3.gif")
-    clip.write_videofile("Covid_india_animation3.mp4")
 
 import streamlit as st
 import pandas as pd
@@ -74,7 +70,11 @@ df_india=pd.read_csv('df_india.csv')
 df_statewise=pd.read_csv('df_statewise.csv')
 df_statewise.loc[df_statewise['loc']=='Telangana','loc']='Telengana'
 df_statewise.loc[df_statewise['loc']=='Dadra and Nagar Haveli and Daman and Diu','loc']='Dadar Nagar Haveli'
-bar_chart_race_plot(df_statewise,df_india)
+animator=bar_chart_race_plot(df_statewise,df_india)
+animator.save('Covid_india_animation3.gif',fps=4)#writer='ffmpeg',
+import moviepy.editor as mp
+clip = mp.VideoFileClip("Covid_india_animation3.gif")
+clip.write_videofile("Covid_india_animation3.mp4")
 
 #video_file = open('Covid_india_animation3.mp4', 'rb')
 #video_bytes = video_file.read()
