@@ -150,7 +150,7 @@ elif location_type=='Overall India':
     st.write('')
     st.subheader('Statewise-count as of {}'.format(datetime.today().date()))
     x=df_statewise[-35:].sort_values('total',ascending=False)[['loc','total','active','discharged','deaths']]
-    x.reset_index(drop=True,inpace=True)
+    x.reset_index(drop=True,inplace=True)
     cm = sns.light_palette("green", as_cmap=True)
     s = x.style.background_gradient(cmap=cm)
     st.dataframe(s,width=600)
