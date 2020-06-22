@@ -123,7 +123,7 @@ class covid_plotter:
         tracea=go.Scatter(x=df.date, y=df.active, mode='lines+markers',name='active', marker_symbol=2,
                            marker = dict(color = '#fa574b'),text=(df.peractive.apply(lambda x:str(x)) + '%'))
         tracer=go.Scatter(x=df.date, y=df.rollingactive, mode='lines',name='Last 7 days average', marker_symbol=5,
-                           marker = dict(color = '#000000'),text=(df.rollingactive.apply(lambda x:str(x))))
+                           marker = dict(color = '#000000'))
         data = [tracet, tracede,tracedi,tracea,tracer]
 
         layout = dict(title = title_graph,xaxis= dict(title= 'Date',zeroline= True),height=400)
@@ -139,7 +139,7 @@ class covid_plotter:
         go.Bar(name='Active',    x=df.date, y=df.active,marker=dict(color='#fa574b'),hovertext=(df.peractive.apply(lambda x:str(x)) + '%')),
         go.Bar(name='Discharged',x=df.date, y=df.discharged,marker=dict(color='#4dfa90'),hovertext=(df.perdis.apply(lambda x:str(x)) + '%')),
         go.Bar(name='Deaths',    x=df.date, y=df.deaths,marker=dict(color='#4cd0f5'),hovertext=(df.perdeath.apply(lambda x:str(x)) + '%')),
-        go.Scatter(name='Last 7 days average', x=df.date, y=df.rollingactive ,marker=dict(color='#000000'),hovertext=(df.rollingactive.apply(lambda x:str(x)))),
+        go.Scatter(name='Last 7 days average', x=df.date, y=df.rollingactive ,marker=dict(color='#000000')),
         ])
         fig1.update_layout(barmode='stack',title=title_graph,height=400)
 
