@@ -32,6 +32,10 @@ st.markdown(title,unsafe_allow_html=True)
 st.subheader('by Rutvik Baxi')
 st.write('')
 
+df_timestamp=pd.read_csv('df_timestamp.csv')
+timestamp=pd.to_datetime(df_timestamp.loc[0].values[0])
+time_elapsed=(((datetime.today())-timestamp).seconds/3600 + ((datetime.today())-timestamp).days*24)
+
 @st.cache
 def load_data():
     data1=covid_india()
