@@ -88,10 +88,10 @@ class covid_india:
                 df_daily_statewise=df_daily_statewise.append([df_daily_temp],sort=True)
             self.df_daily_statewise=df_daily_statewise
 
-            df_india.to_pickle('df_india.pkl')
-            df_statewise.to_pickle('df_statewise.pkl')
-            df_india_daily.to_pickle('df_india_daily.pkl')
-            df_daily_statewise.to_pickle('df_daily_statewise.pkl')
+            # df_india.to_pickle('df_india.pkl')
+            # df_statewise.to_pickle('df_statewise.pkl')
+            # df_india_daily.to_pickle('df_india_daily.pkl')
+            # df_daily_statewise.to_pickle('df_daily_statewise.pkl')
 
             df_india.to_csv('df_india.csv',index=False)
             df_statewise.to_csv('df_statewise.csv',index=False)
