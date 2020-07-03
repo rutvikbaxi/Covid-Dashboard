@@ -103,7 +103,7 @@ if location_type=='Individual States':
     st.markdown(t.format(f'{ttotal:,.0f}',f'{tactive:,.0f}',tperactive,f'{tdis:,.0f}',tperdis,f'{tdeaths:,.0f}',tperdeath), unsafe_allow_html=True)
     st.write('')
     #st.write('as of  ',str(datetime.now()).split()[0])
-    st.write('last updated on ',timestamp+ timedelta(seconds=19800),' IST'  )  
+    st.write('last updated on ',timestamp,' IST'  )  
     st.write('')
     st.write(plt1.top_10_states(df_statewise))
     
@@ -118,7 +118,7 @@ elif location_type=='Overall India':
     st.markdown(t.format(f'{ttotal:,.0f}',f'{tactive:,.0f}',tperactive,f'{tdis:,.0f}',tperdis,f'{tdeaths:,.0f}',tperdeath), unsafe_allow_html=True)
     st.write('')
     #st.write('as of  ',str(datetime.now()).split()[0])
-    st.write('last updated on ',timestamp+ timedelta(seconds=19800),' IST' )  
+    st.write('last updated on ',timestamp,' IST' ) #+ timedelta(seconds=19800)
     st.write('')
     graph_type=st.selectbox('Type of Graph',options=('Bar','Line'))
     date_range=st.radio(' ',options=('Overall','Last 15 days'))
