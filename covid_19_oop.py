@@ -101,7 +101,7 @@ class covid_india:
             #map_plot()
 
             #refresh the timestamp
-            timestamp=datetime.today()
+            timestamp=datetime.today() + timedelta(seconds=19800)
             df_timestamp=pd.DataFrame()
             df_timestamp.loc[0,0]=timestamp
             df_timestamp.to_pickle('df_timestamp.pkl')

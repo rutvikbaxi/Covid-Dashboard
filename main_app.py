@@ -40,7 +40,10 @@ st.write('')
 def load_data():
    data1=covid_india()
    return data1
-data1=load_data()
+
+#data_update=st.radio('Do you want to see the latest data (it might take a minute or so to update)?',options=('Yes','No'))
+if st.button('See the latest data (It might take a minute or so to update)'):
+    data1=load_data()
 #data1=covid_india()
 
 #df_india=pd.read_pickle('df_india.pkl')
@@ -165,6 +168,6 @@ elif location_type=='About the page':
     st.header('About the developer')
     st.image('rutvik.jpg', width=150)
     st.markdown(' “You can have data without information, but you cannot have information without data.” – Daniel Keys Moran')
-    st.markdown('Hello there! My name is Rutvik Baxi and I am currently an undergraduate student enrolled at the Department of Engineering Design at IIT Madras.  I enjoy learning new stuff which helps me expand my boundaries of knowledge and experience.I am highly enthusisatic about the field of Data Analytics and Machine Learning, and enjoy how new oppurtunities unroll every day in this field. So in an attempt to implement all my learning, I have built this real-time dashboard to present the most severe issue of India and the world in 2020: Covid19. This is an interactive dashboard with real time data and customized plots. This dashboard has been built using Streamlit and is mainly Python script. The data is updated every 24 hours. I will be glad to hear your thoughts or suggestions, you can reach out to me via [my LinkedIn](https://www.linkedin.com/in/rutvik-baxi) or [Facebook](https://www.facebook.com/rutvik.baxi.3/).',unsafe_allow_html=True)
+    st.markdown('Hello there! My name is Rutvik Baxi and I am currently an undergraduate student enrolled at the Department of Engineering Design at IIT Madras.  I enjoy learning new stuff which helps me expand my boundaries of knowledge and experience.I am highly enthusisatic about the field of Data Analytics and Machine Learning, and enjoy how new oppurtunities unroll every day in this field. So in an attempt to implement all my learning, I have built this real-time dashboard to present the most severe issue of India and the world in 2020: Covid19. This is an interactive dashboard with real time data and customized plots. This dashboard has been built using Streamlit and is mainly Python script. I will be glad to hear your thoughts or suggestions, you can reach out to me via [my LinkedIn](https://www.linkedin.com/in/rutvik-baxi) or [Facebook](https://www.facebook.com/rutvik.baxi.3/).',unsafe_allow_html=True)
     st.subheader('Acknowledgements')
     st.write('The data used here is collected from an online API from api.rootnet.in. ')
