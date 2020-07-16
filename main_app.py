@@ -123,8 +123,8 @@ elif location_type=='Overall India':
     #st.write('as of  ',str(datetime.now()).split()[0])
     st.write('last updated on ',timestamp,' IST' ) #+ timedelta(seconds=19800)
     st.write('')
-    graph_type=st.selectbox('Type of Graph',options=('Bar','Line'))
-    date_range=st.radio(' ',options=('Overall','Last 15 days'))
+    date_range=st.selectbox(' ',options=('Overall','Last 15 days'))
+    graph_type=st.radio('Type of Graph',options=('Bar','Line'))
     if date_range=='Overall':
         if graph_type=='Bar':
             st.write(plt1.stack_bar(df_india,'India cases: overall'))
