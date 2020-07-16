@@ -41,9 +41,9 @@ def load_data():
    data1=covid_india()
    return data1
 
-#data_update=st.radio('Do you want to see the latest data (it might take a minute or so to update)?',options=('Yes','No'))
-if st.button('See the latest data (It might take a minute or so to update)'):
+if st.button('See the latest data (It might take a minute or so to update)',key='update_data_key'):
     data1=load_data()
+#data_update=st.radio('Do you want to see the latest data (it might take a minute or so to update)?',options=('Yes','No'))
 #data1=covid_india()
 
 #df_india=pd.read_pickle('df_india.pkl')
@@ -110,10 +110,7 @@ if location_type=='Individual States':
     st.write('')
     st.write(plt1.top_10_states(df_statewise))
     
-elif location_type=='Overall India':
-    if st.button('See the latest data (It might take a minute or so to update)'):
-        data1=load_data()
-        
+elif location_type=='Overall India':        
     ttotal=df_india[-1:]['total'].values[0]
     tactive=df_india[-1:]['active'].values[0]
     tperactive=str(df_india[-1:]['peractive'].values[0])
