@@ -23,7 +23,7 @@ class covid_india:
         from datetime import datetime
         from datetime import timedelta
         time_elapsed=(((datetime.today())-timestamp).seconds/3600 + ((datetime.today())-timestamp).days*24)
-        if (datetime.today().hour==3 or time_elapsed >24):
+        if (time_elapsed >24):
             import json
             import urllib
             import time
@@ -101,11 +101,11 @@ class covid_india:
             #map_plot()
 
             #refresh the timestamp
-            timestamp=datetime.today() + timedelta(seconds=19800)
-            df_timestamp=pd.DataFrame()
-            df_timestamp.loc[0,0]=timestamp
-            df_timestamp.to_pickle('df_timestamp.pkl')
-            df_timestamp.to_csv('df_timestamp.csv',index=False)
+        timestamp=datetime.today() + timedelta(seconds=19800)
+        df_timestamp=pd.DataFrame()
+        df_timestamp.loc[0,0]=timestamp
+        df_timestamp.to_pickle('df_timestamp.pkl')
+        df_timestamp.to_csv('df_timestamp.csv',index=False)
             
             
 
