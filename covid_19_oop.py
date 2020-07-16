@@ -158,12 +158,13 @@ class covid_plotter:
         return fig
 
     def lockdown(self,df):
-        date_list=['2020-03-24', '2020-04-14', '2020-05-01', '2020-05-17','2020-05-30',df[-1:].date.values[0]]
+        date_list=['2020-03-24', '2020-04-14', '2020-05-01', '2020-05-17','2020-05-30','2020-06-30',df[-1:].date.values[0]]
         df2=df[df['date'].isin(date_list)]
         for i in range(0,4):
             x=date_list[i]
             df2.loc[df2['date']==x,'lockdown']='Lockdown {}'.format(i)
         df2.loc[df2['date']=='2020-05-30','lockdown']='Unlock {}'.format(1)
+        df2.loc[df2['date']=='2020-06-30','lockdown']='Unlock {}'.format(2)
         df2.loc[df2['date']==df[-1:].date.values[0],'lockdown']='Present'
         tracet=go.Scatter(x=df2.lockdown, y=df2.total, mode='lines+markers',name='total cases',marker_symbol=0,
                    marker = dict(color = '#4cd0f5'),)
