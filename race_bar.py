@@ -69,6 +69,7 @@ import pandas as pd
 df_india=pd.read_csv('df_india.csv')
 df_statewise=pd.read_csv('df_statewise.csv')
 df_statewise.loc[df_statewise['loc']=='Telangana','loc']='Telengana'
+df_statewise.loc[df_statewise['loc']=='Telangana***','loc']='Telengana'
 df_statewise.loc[df_statewise['loc']=='Dadra and Nagar Haveli and Daman and Diu','loc']='Dadar Nagar Haveli'
 animator=bar_chart_race_plot(df_statewise,df_india)
 animator.save('Covid_india_animation3.gif',writer='pillow',fps=4)

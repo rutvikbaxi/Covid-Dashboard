@@ -41,9 +41,9 @@ class covid_india:
                 df_india=df_india.append(df_temp,ignore_index=True)
             #Calculating percentage and also active cases
             df_india['active']=df_india.apply(lambda x: x.total-x.discharged-x.deaths,axis=1)
-            df_india['perdeath']=df_india.apply(lambda x: '%.2f'%(x['deaths']*100/x.total),axis=1)
-            df_india['perdis']=df_india.apply(lambda x: '%.2f'%(x['discharged']*100/x.total),axis=1)
-            df_india['peractive']=df_india.apply(lambda x: '%.2f'%(x['active']*100/x.total),axis=1)
+            df_india['perdeath']=df_india.apply(lambda x: '%.2f'%(x['deaths']*100/(x.total)),axis=1)
+            df_india['perdis']=df_india.apply(lambda x: '%.2f'%(x['discharged']*100/(x.total)),axis=1)
+            df_india['peractive']=df_india.apply(lambda x: '%.2f'%(x['active']*100/(x.total)),axis=1)
             #Converting to float
             df_india['perdeath']=df_india['perdeath'].astype(float)
             df_india['perdis']=df_india['perdis'].astype(float)
@@ -66,9 +66,9 @@ class covid_india:
 
             df_statewise.drop([1052,1085],inplace=True)
             df_statewise['active']=df_statewise.apply(lambda x: x.totalConfirmed-x.discharged-x.deaths,axis=1)
-            df_statewise['perdeath']=df_statewise.apply(lambda x: '%.2f'%(x['deaths']*100/x.totalConfirmed),axis=1)
-            df_statewise['perdis']=df_statewise.apply(lambda x: '%.2f'%(x['discharged']*100/x.totalConfirmed),axis=1)
-            df_statewise['peractive']=df_statewise.apply(lambda x: '%.2f'%(x['active']*100/x.totalConfirmed),axis=1)
+            df_statewise['perdeath']=df_statewise.apply(lambda x: '%.2f'%(x['deaths']*100/(x.totalConfirmed+1)),axis=1)
+            df_statewise['perdis']=df_statewise.apply(lambda x: '%.2f'%(x['discharged']*100/(x.totalConfirmed+1)),axis=1)
+            df_statewise['peractive']=df_statewise.apply(lambda x: '%.2f'%(x['active']*100/(x.totalConfirmed+1)),axis=1)
                 #Converting to float
             df_statewise['perdeath']=df_statewise['perdeath'].astype(float)
             df_statewise['perdis']=df_statewise['perdis'].astype(float)
@@ -92,6 +92,10 @@ class covid_india:
             # df_statewise.to_pickle('df_statewise.pkl')
             # df_india_daily.to_pickle('df_india_daily.pkl')
             # df_daily_statewise.to_pickle('df_daily_statewise.pkl')
+
+            df_statewise.loc[df_statewise['loc']=='Telangana','loc']='Telengana'
+            df_statewise.loc[df_statewise['loc']=='Telangana***','loc']='Telengana'
+            df_statewise.loc[df_statewise['loc']=='Dadra and Nagar Haveli and Daman and Diu','loc']='Dadar Nagar Haveli'
 
             df_india.to_csv('df_india.csv',index=False)
             df_statewise.to_csv('df_statewise.csv',index=False)
@@ -244,7 +248,7 @@ class covid_plotter:
 
     def map_plot(self,df_statewise):
         df_coords_state=pd.read_csv('state wise centroids_2011.csv')
-        df_statewise=df_statewise[df_statewise['loc']!='Daman & Diu']
+        df_statewise=df_statewise[(df_statewise['loc']!='Daman & Diu') & (df_statewise['loc']!='Lakshadweep')]
         df_statewise=df_statewise[-35:]
         df_statewise=df_statewise[['loc','total','active','deaths','discharged']]
         df_statewise.reset_index(inplace=True, drop=True)
