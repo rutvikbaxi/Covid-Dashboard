@@ -4,7 +4,7 @@ import numpy as np
 import seaborn as sns
 from plotly import graph_objs as go
 from plotly.offline import iplot,plot,download_plotlyjs,init_notebook_mode
-from covid_19_oop import covid_india,covid_plotter
+from covid_19_oop_copy import covid_india,covid_plotter
 from datetime import datetime 
 from datetime import timedelta
 from functions import *

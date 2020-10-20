@@ -32,12 +32,12 @@ class covid_india:
             import pandas as pd
             url = "https://api.rootnet.in/covid19-in/stats/history"
             data = json.loads(requests.get(url).text)
-            #df_india_o=pd.read_csv('df_india.csv')
-            #df_statewise_o=pd.read_csv('df_statewise.csv')
+            df_india_o=pd.read_csv('df_india.csv')
+            df_statewise_o=pd.read_csv('df_statewise.csv')
 
             df_india=pd.DataFrame(columns=['total','deaths','discharged'])
             df_temp=pd.DataFrame()
-            for i in range(0,len(data['data'])):
+            for i in range(df_india_o['date'].count(),len(data['data'])):
                 df_temp[['total','deaths','discharged']]=pd.DataFrame([data['data'][i]['summary'][x] for x in ['total','deaths','discharged']]).T
                 df_temp['date']=data['data'][i]['day']
                 df_india=df_india.append(df_temp,ignore_index=True)
@@ -51,15 +51,15 @@ class covid_india:
             df_india['perdis']=df_india['perdis'].astype(float)
             df_india['peractive']=df_india['peractive'].astype(float)
 
-            #df_india_o=df_india_o.append(df_india, ignore_index=True)
-            #df_india = df_india_o
+            df_india_o=df_india_o.append(df_india, ignore_index=True)
+            df_india = df_india_o
             self.df_india=df_india
 
 
             #state
             df_statewise=pd.DataFrame()
             df_temp2=pd.DataFrame()
-            for j in range(0,len(data['data'])):#df_india_o['date'].count()
+            for j in range(df_india_o['date'].count(),len(data['data'])):
                 df_temp2=pd.DataFrame()
                 for i in range(0,len(data['data'][j]['regional'])):
                     df_temp=pd.DataFrame(data['data'][j]['regional'][i],index=[i])
@@ -81,8 +81,8 @@ class covid_india:
             df_statewise['peractive']=df_statewise['peractive'].astype(float)
             df_statewise=df_statewise.rename(columns={'totalConfirmed':'total'})
 
-            #df_statewise_o=df_statewise_o.append(df_statewise, ignore_index=True)
-            #df_statewise = df_statewise_o           
+            df_statewise_o=df_statewise_o.append(df_statewise, ignore_index=True)
+            df_statewise = df_statewise_o           
             self.df_statewise=df_statewise
 
             #india_daily(self):
