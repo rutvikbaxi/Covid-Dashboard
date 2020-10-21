@@ -23,7 +23,7 @@ class covid_india:
         from datetime import datetime
         from datetime import timedelta
         time_elapsed=(((datetime.today())-timestamp).seconds/3600 + ((datetime.today())-timestamp).days*24)
-        if (time_elapsed >24):
+        if (time_elapsed !=0):
             import json
             import urllib
             import time
@@ -34,10 +34,10 @@ class covid_india:
             data = json.loads(requests.get(url).text)
             df_india_o=pd.read_csv('df_india.csv')
             df_statewise_o=pd.read_csv('df_statewise.csv')
-
+            start_date=df_india_o['date'].count()
             df_india=pd.DataFrame(columns=['total','deaths','discharged'])
             df_temp=pd.DataFrame()
-            for i in range(df_india_o['date'].count(),len(data['data'])):
+            for i in range(start_date,len(data['data'])):
                 df_temp[['total','deaths','discharged']]=pd.DataFrame([data['data'][i]['summary'][x] for x in ['total','deaths','discharged']]).T
                 df_temp['date']=data['data'][i]['day']
                 df_india=df_india.append(df_temp,ignore_index=True)
@@ -50,27 +50,27 @@ class covid_india:
             df_india['perdeath']=df_india['perdeath'].astype(float)
             df_india['perdis']=df_india['perdis'].astype(float)
             df_india['peractive']=df_india['peractive'].astype(float)
-
+            
             df_india_o=df_india_o.append(df_india, ignore_index=True)
             df_india = df_india_o
             self.df_india=df_india
 
-
             #state
             df_statewise=pd.DataFrame()
             df_temp2=pd.DataFrame()
-            for j in range(df_india_o['date'].count(),len(data['data'])):
+            for j in range(start_date,len(data['data'])):
                 df_temp2=pd.DataFrame()
                 for i in range(0,len(data['data'][j]['regional'])):
                     df_temp=pd.DataFrame(data['data'][j]['regional'][i],index=[i])
                     df_temp2=df_temp2.append([df_temp],sort=True)
                 df_temp2['date']=data['data'][j]['day']
                 df_statewise=df_statewise.append([df_temp2],sort=True)
+
             df_statewise=df_statewise[(df_statewise['loc']!='Nagaland#') & (df_statewise['loc']!='Jharkhand#') & (df_statewise['loc']!='Madhya Pradesh#')]
             df_statewise=df_statewise[[ 'loc','totalConfirmed','deaths','discharged','date']]
             df_statewise.reset_index(drop=True,inplace=True) 
 
-            df_statewise.drop([1052,1085],inplace=True)
+            #df_statewise.drop([1052,1085],inplace=True)
             df_statewise['active']=df_statewise.apply(lambda x: x.totalConfirmed-x.discharged-x.deaths,axis=1)
             df_statewise['perdeath']=df_statewise.apply(lambda x: '%.2f'%(x['deaths']*100/(x.totalConfirmed+1)),axis=1)
             df_statewise['perdis']=df_statewise.apply(lambda x: '%.2f'%(x['discharged']*100/(x.totalConfirmed+1)),axis=1)

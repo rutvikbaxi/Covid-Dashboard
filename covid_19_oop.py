@@ -23,7 +23,7 @@ class covid_india:
         from datetime import datetime
         from datetime import timedelta
         time_elapsed=(((datetime.today())-timestamp).seconds/3600 + ((datetime.today())-timestamp).days*24)
-        if (time_elapsed >24):
+        if (time_elapsed!=0):
             import json
             import urllib
             import time
@@ -66,6 +66,7 @@ class covid_india:
                     df_temp2=df_temp2.append([df_temp],sort=True)
                 df_temp2['date']=data['data'][j]['day']
                 df_statewise=df_statewise.append([df_temp2],sort=True)
+                
             df_statewise=df_statewise[(df_statewise['loc']!='Nagaland#') & (df_statewise['loc']!='Jharkhand#') & (df_statewise['loc']!='Madhya Pradesh#')]
             df_statewise=df_statewise[[ 'loc','totalConfirmed','deaths','discharged','date']]
             df_statewise.reset_index(drop=True,inplace=True) 
