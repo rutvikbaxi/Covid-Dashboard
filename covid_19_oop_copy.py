@@ -23,18 +23,19 @@ class covid_india:
         from datetime import datetime
         from datetime import timedelta
         time_elapsed=(((datetime.today())-timestamp).seconds/3600 + ((datetime.today())-timestamp).days*24)
-        if (time_elapsed !=0):
-            import json
-            import urllib
-            import time
-            import requests
-            import numpy as np
-            import pandas as pd
-            url = "https://api.rootnet.in/covid19-in/stats/history"
-            data = json.loads(requests.get(url).text)
-            df_india_o=pd.read_csv('df_india.csv')
-            df_statewise_o=pd.read_csv('df_statewise.csv')
-            start_date=df_india_o['date'].count()
+        import json
+        import urllib
+        import time
+        import requests
+        import numpy as np
+        import pandas as pd
+        url = "https://api.rootnet.in/covid19-in/stats/history"
+        data = json.loads(requests.get(url).text)
+        df_india_o=pd.read_csv('df_india.csv')
+        df_statewise_o=pd.read_csv('df_statewise.csv')
+        start_date=df_india_o['date'].count()
+        if (start_date<len(data['data'])):
+            
             df_india=pd.DataFrame(columns=['total','deaths','discharged'])
             df_temp=pd.DataFrame()
             for i in range(start_date,len(data['data'])):
