@@ -55,7 +55,7 @@ df_india=pd.read_csv('df_india.csv')
 df_statewise=pd.read_csv('df_statewise.csv')
 df_india_daily=pd.read_csv('df_india_daily.csv')
 df_daily_statewise=pd.read_csv('df_daily_statewise.csv')
-df_india_daily=df_india_daily[df_india_daily['active']>=0]
+#df_india_daily=df_india_daily[df_india_daily['active']>=0]
 df_statewise.loc[df_statewise['loc']=='Telangana','loc']='Telengana'
 df_statewise.loc[df_statewise['loc']=='Telangana***','loc']='Telengana'
 df_statewise.loc[df_statewise['loc']=='Dadra and Nagar Haveli and Daman and Diu','loc']='Dadar Nagar Haveli'
@@ -129,7 +129,7 @@ elif location_type=='Overall India':
     if date_range=='Overall':
         if graph_type=='Bar':
             st.write(plt1.stack_bar(df_india,'India cases: overall'))
-            st.write(plt1.stack_bar(df_india_daily,'India cases: daily'))
+            st.write(plt1.stack_bar_daily(df_india_daily,'India cases: daily'))
             
         else:
             st.write(plt1.lineplot(df_india,'India total cases'))
@@ -137,7 +137,7 @@ elif location_type=='Overall India':
     else:
         if graph_type=='Bar':
             st.write(plt1.stack_bar(df_india[-15:],'India cases: Last 15 days'))
-            st.write(plt1.stack_bar(df_india_daily[-15:],'India cases: Daily count in last 15 days'))
+            st.write(plt1.stack_bar_daily(df_india_daily[-15:],'India cases: Daily count in last 15 days'))
 
         else:
             st.write(plt1.lineplot(df_india[-15:],'India cases: Last 15 days'))

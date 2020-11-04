@@ -171,6 +171,32 @@ class covid_plotter:
                         title_text="States with highest active cases")
         return fig
 
+    def stack_bar_daily(self,df,title_graph):
+        roll=df['total'].rolling(7).mean()
+        roll=roll.fillna(0) 
+        df['rollingactive']=pd.DataFrame(roll)
+        fig1 = go.Figure(data=[
+        go.Bar(name='New cases',    x=df.date, y=df.total,marker=dict(color='#fa574b')),
+        go.Bar(name='Discharged',x=df.date, y=df.discharged,marker=dict(color='#4dfa90')),
+        go.Bar(name='Deaths',    x=df.date, y=df.deaths,marker=dict(color='#4cd0f5')),
+        go.Scatter(name='Last 7 days average', x=df.date, y=df.rollingactive ,marker=dict(color='#000000')),
+        ])
+        fig1.update_layout(barmode='stack',title=title_graph,height=400)
+
+        return fig1
+
+        min_4=df_statewise[-35:].sort_values('active',ascending=False)[:4]['loc'].values
+        fig = make_subplots(rows=2, cols=2,
+                            subplot_titles=min_4)
+                            
+        fig.add_trace(go.Scatter(x=df_statewise[df_statewise['loc']==min_4[0]]['date'],y=df_statewise[df_statewise['loc']==min_4[0]]['total']),row=1, col=1)
+        fig.add_trace(go.Scatter(x=df_statewise[df_statewise['loc']==min_4[1]]['date'],y=df_statewise[df_statewise['loc']==min_4[1]]['total']),row=1, col=2)
+        fig.add_trace(go.Scatter(x=df_statewise[df_statewise['loc']==min_4[2]]['date'],y=df_statewise[df_statewise['loc']==min_4[2]]['total']),row=2, col=1)
+        fig.add_trace(go.Scatter(x=df_statewise[df_statewise['loc']==min_4[3]]['date'],y=df_statewise[df_statewise['loc']==min_4[3]]['total']),row=2, col=2)
+        fig.update_layout(height=500, width=700,
+                        title_text="States with highest active cases")
+        return fig
+
     def lockdown(self,df):
         date_list=['2020-03-24', '2020-04-14', '2020-05-01', '2020-05-17','2020-05-30','2020-06-30',df[-1:].date.values[0]]
         df2=df[df['date'].isin(date_list)]
