@@ -148,7 +148,7 @@ elif location_type=='Overall India':
             st.write(plt1.lineplot(df_india[-15:],'India cases: Last 15 days'))
             st.write(plt1.lineplot(df_india_daily[-15:],'India cases:  Daily count in last 15 days'))
     
-    st.write(plt1.lockdown(df_india))
+    #st.write(plt1.lockdown(df_india)) lockdown wise changes
     video_file = open('Covid_india_animation3.mp4', 'rb')
     video_bytes = video_file.read()
     st.video(video_bytes)
@@ -177,3 +177,6 @@ elif location_type=='About the page':
     st.markdown('Hello there! My name is Rutvik Baxi and I am currently an undergraduate student enrolled at the Department of Engineering Design at IIT Madras.  I enjoy learning new stuff which helps me expand my boundaries of knowledge and experience.I am highly enthusisatic about the field of Data Analytics and Machine Learning, and enjoy how new oppurtunities unroll every day in this field. So in an attempt to implement all my learning, I have built this real-time dashboard to present the most severe issue of India and the world in 2020: Covid19. This is an interactive dashboard with real time data and customized plots. This dashboard has been built using Streamlit and is mainly Python script. I will be glad to hear your thoughts or suggestions, you can reach out to me via [my LinkedIn](https://www.linkedin.com/in/rutvik-baxi) or [Facebook](https://www.facebook.com/rutvik.baxi.3/).',unsafe_allow_html=True)
     st.subheader('Acknowledgements')
     st.write('The data used here is collected from an online API from api.rootnet.in. ')
+    st.subheader('Source code')
+    st.write('View the source code [here](https://github.com/rutvikbaxi/Covid-Dashboard) ',unsafe_allow_html=True)
+
