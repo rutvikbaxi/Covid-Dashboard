@@ -37,7 +37,7 @@ st.write('')
 #st.write('Ignore this line: ',timestamp+ timedelta(seconds=19800),' IST')
 
 @st.cache
-def load_data():
+def load_data():        
    data1=covid_india()
    return data1
 
@@ -62,6 +62,11 @@ df_statewise.loc[df_statewise['loc']=='Dadra and Nagar Haveli and Daman and Diu'
 #df_india_daily.reset_index(drop=True,inplace=True)
 #def main():
 
+for i in range(1,len(df_india_daily)):
+    if( df_india_daily.loc[i,'total']==0 ):
+        cols = list(df_india_daily.columns[:-1]) 
+        df_india_daily.loc[i, cols] = df_india_daily.loc[i-1, cols]/2
+        df_india_daily.loc[i-1, cols] = df_india_daily.loc[i-1, cols]/2
 
 plt1=covid_plotter()
 ################################

@@ -54,6 +54,7 @@ class covid_india:
             
             df_india_o=df_india_o.append(df_india, ignore_index=True)
             df_india = df_india_o
+
             self.df_india=df_india
 
             #state
@@ -89,6 +90,12 @@ class covid_india:
             #india_daily(self):
             self.df_india_daily=self.df_india.drop('date',axis=1).diff().join(df_india['date']).drop(0)
             df_india_daily=self.df_india_daily
+            
+            for i in range(1,len(df_india_daily)):
+                if( df_india_daily.loc[i,'total']==0 ):
+                    cols = list(df_india_daily.columns[:-1]) 
+                    df_india_daily.loc[i, cols] = df_india_daily.loc[i-1, cols]/2
+                    df_india_daily.loc[i-1, cols] = df_india_daily.loc[i-1, cols]/2
 
             #statewise daily count
             df_daily_statewise=pd.DataFrame()
@@ -105,6 +112,7 @@ class covid_india:
 
             df_statewise.loc[df_statewise['loc']=='Telangana','loc']='Telengana'
             df_statewise.loc[df_statewise['loc']=='Telangana***','loc']='Telengana'
+            df_statewise.loc[df_statewise['loc']=='Maharashtra***','loc']='Maharashtra'
             df_statewise.loc[df_statewise['loc']=='Dadra and Nagar Haveli and Daman and Diu','loc']='Dadar Nagar Haveli'
 
             df_india.to_csv('df_india.csv',index=False)
